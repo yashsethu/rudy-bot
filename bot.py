@@ -1,14 +1,11 @@
-# IMPORT DISCORD.PY. ALLOWS ACCESS TO DISCORD'S API.
-import discord
+from discord import Client, Intents
 
-# GETS THE CLIENT OBJECT FROM DISCORD.PY. CLIENT IS SYNONYMOUS WITH BOT.
-intents = discord.Intents.default()
+intents = Intents.default()
 intents.typing = False
 intents.presences = False
-bot = discord.Client(intents=intents)
+bot = Client(intents=intents)
 
 
-# EVENT LISTENER FOR WHEN THE BOT HAS SWITCHED FROM OFFLINE TO ONLINE.
 @bot.event
 async def on_ready():
     # CREATES A COUNTER TO KEEP TRACK OF HOW MANY GUILDS / SERVERS THE BOT IS CONNECTED TO.
