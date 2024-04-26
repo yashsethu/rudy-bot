@@ -13,7 +13,7 @@ class Speech(commands.Cog):
         self.bot = bot
         self.votes = {}
 
-    @commands.slash_command(name="speech", description="Commands related to the speech")
+    @bot.slash_command(name="speech", description="Commands related to the speech")
     async def speech(self, ctx, subcommand: str, time: int):
         if subcommand == "vote":
             if time is None:
