@@ -1,13 +1,13 @@
 # Imports
 import os
 from discord import Intents
-from discord.ext import commands
+from discord.ext.commands import Bot
 
 # Sets up the pycord intents
 intents = Intents.default()
 intents.typing = False
 intents.presences = False
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = Bot(command_prefix="!", intents=intents)
 
 votes = {}
 
