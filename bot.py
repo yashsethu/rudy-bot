@@ -1,18 +1,24 @@
 # Imports
-import discord
+import os
 from discord import Intents
+from discord.ext import commands
 
 # Sets up the pycord intents
 intents = Intents.default()
 intents.typing = False
 intents.presences = False
-bot = discord.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 votes = {}
 
 speech_time = 0
 
-speech = bot.create_group("speech", "Commands related to the speech")
+
+@bot.group()
+async def speech(ctx):
+    if ctx.invoked_subcommand is None:
+        await ctx.respond("Invalid command")
+        return
 
 
 @speech.command()
@@ -52,4 +58,4 @@ async def set(ctx, time: int):
         votes.clear()
 
 
-bot.run("MTIzMjUxMjQ2MTAyNzAxNjczNQ.GQQJRh.OFixnxYaV65xvFgUVtUVqYsjHK985ooxdgHdys")
+bot.run(os.getenv("DISCORD_BOT_TOKEN"))
