@@ -4,7 +4,8 @@
   "description": "LHS Track and Field + XC Discord Bot",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "heroku-postbuild": "node deploy-commands.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,7 @@
   "author": "Yash Sethuraman",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5"
   }
 }
