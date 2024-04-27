@@ -1,0 +1,15 @@
+{
+  "name": "rudy-bot",
+  "version": "1.0.0",
+  "description": "LHS Track and Field + XC Discord Bot",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "rudy-bot"
+  },
+  "author": "Yash Sethuraman",
+  "license": "ISC"
+}
