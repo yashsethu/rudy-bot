@@ -10,7 +10,7 @@ module.exports = {
         .setName("vote")
         .setDescription("Vote on speech times!")
         .addIntegerOption((option) =>
-          option.setName("time").setDescription("time")
+          option.setName("time").setDescription("time").setRequired(true)
         )
     )
     .addSubcommand((subcommand) =>
@@ -18,7 +18,7 @@ module.exports = {
         .setName("set")
         .setDescription("Set actual (or estimated) speech times for the day!")
         .addIntegerOption((option) =>
-          option.setName("time").setDescription("time")
+          option.setName("time").setDescription("time").setRequired(true)
         )
     ),
 
@@ -26,6 +26,14 @@ module.exports = {
     const subcommand = interaction.options.getSubcommand();
     const time = interaction.options.getInteger("time");
     const user = `<@${interaction.user.id}>`;
+
+    if (!subcommand) {
+      await interaction.reply({
+        content: "You must provide a subcommand!",
+        ephemeral: true,
+      });
+      return;
+    }
 
     switch (subcommand) {
       case "vote":
@@ -42,9 +50,8 @@ module.exports = {
         } else {
           if (Object.keys(this.votes).length === 0) {
             await interaction.reply(
-              `${user} set the speech time as ${time} minutes!`
+              `${user} set the speech time as ${time} minutes, but no votes have been cast yet!`
             );
-            await interaction.reply("No votes have been cast yet!");
           } else {
             let closestUser = null;
             let closestTimeDifference = Infinity;
@@ -53,7 +60,7 @@ module.exports = {
               const timeDifference = Math.abs(vote - time);
 
               if (timeDifference < closestTimeDifference) {
-                closestUser = `<@${voter}>`;
+                closestUser = `${voter}`;
                 closestTimeDifference = timeDifference;
               }
             }
@@ -65,9 +72,6 @@ module.exports = {
             this.votes = {};
           }
         }
-        break;
-      default:
-        await interaction.reply("Unknown command!");
         break;
     }
   },
