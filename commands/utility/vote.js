@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { Permissions } = require("discord.js");
 
 module.exports = {
   votes: {},
@@ -45,7 +46,9 @@ module.exports = {
         }
         break;
       case "set":
-        if (!interaction.member.permissions.has("ADMINISTRATOR")) {
+        if (
+          !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)
+        ) {
           await interaction.reply("Only admins can set the time!");
         } else {
           if (Object.keys(this.votes).length === 0) {

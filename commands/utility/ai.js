@@ -21,18 +21,23 @@ module.exports = {
         )
     ),
   async execute(interaction) {
-    const subcommand = interaction.options.getSubcommand();
-    if (subcommand === "ask") {
-      const question = interaction.options.getString("prompt");
-      const { totalTokens } = await model.countTokens(question);
-      if (totalTokens > 30720) {
-        await interaction.reply("Question is too long!");
-        return;
+    try {
+      const subcommand = interaction.options.getSubcommand();
+      if (subcommand === "ask") {
+        const question = interaction.options.getString("prompt");
+        const { totalTokens } = await model.countTokens(question);
+        if (totalTokens > 30720) {
+          await interaction.reply("Question is too long!");
+          return;
+        }
+        const response = await model.generateContent(question);
+        const answer = await response.response;
+        const string = answer.text();
+        await interaction.reply(string);
       }
-      const response = await model.generateContent(question);
-      const answer = await response.response;
-      const string = answer.text();
-      await interaction.reply(string);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply("An error occurred while executing the command.");
     }
   },
 };
