@@ -42,7 +42,7 @@ module.exports = {
         }
       }
     } catch (error) {
-      if (error instanceof GoogleGenerativeAIResponseError) {
+      if (error.includes("SAFETY")) {
         await interaction.editReply("This prompt was blocked due to safety");
       } else {
         console.error(error);
