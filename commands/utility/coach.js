@@ -3,7 +3,9 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.gemini_api_key);
 
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const model = genAI.getGenerativeModel({
+  model: "gemini-pro",
+});
 
 module.exports = {
   votes: {},
@@ -115,7 +117,7 @@ module.exports = {
         let question = interaction.options.getString("prompt");
         if (interaction.options.getSubcommand() === "ask") {
           question =
-            "Answer this question, pretending like I'm a track athlete and you are my old, slightly snarky, track coach that has dedicated his entire life and career to track: " +
+            "Answer this question, in under 200 words, pretending like I'm a track athlete and you are my old, slightly snarky, track coach that has dedicated his entire life and career to track: " +
             question;
         }
         const { totalTokens } = await model.countTokens(question);
