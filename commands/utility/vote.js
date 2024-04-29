@@ -46,7 +46,7 @@ module.exports = {
         }
         break;
       case "set":
-        if (!member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
+        if (!interaction.member.permissions.has("ADMINISTRATOR")) {
           await interaction.reply("Only admins can set the time!");
         } else {
           if (Object.keys(this.votes).length === 0) {
