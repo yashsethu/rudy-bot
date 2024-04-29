@@ -42,10 +42,14 @@ module.exports = {
         }
       }
     } catch (error) {
-      console.error(error);
-      await interaction.editReply(
-        "An error occurred while executing the command."
-      );
+      if (error instanceof GoogleGenerativeAIResponseError) {
+        await interaction.editReply("This prompt was blocked due to safety");
+      } else {
+        console.error(error);
+        await interaction.editReply(
+          "An error occurred while executing the command."
+        );
+      }
     }
   },
 };
