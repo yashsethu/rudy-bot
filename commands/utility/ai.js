@@ -34,7 +34,12 @@ module.exports = {
         const response = await model.generateContent(question);
         const answer = await response.response;
         const string = answer.text();
-        await interaction.editReply(string);
+        if (string.length > 2000) {
+          const truncatedString = string.substring(0, 2000 - 3) + "...";
+          await interaction.editReply(truncatedString);
+        } else {
+          await interaction.editReply(string);
+        }
       }
     } catch (error) {
       console.error(error);
