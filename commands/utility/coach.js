@@ -112,7 +112,7 @@ module.exports = {
       case "generate":
       case "ask":
         await interaction.deferReply();
-        const question = interaction.options.getString("prompt");
+        let question = interaction.options.getString("prompt");
         if (interaction.options.getSubcommand() === "ask") {
           question =
             "Answer this question, pretending like I'm a track athlete and you are my old, slightly snarky, track coach that has dedicated his entire life and career to track: " +
@@ -139,7 +139,6 @@ module.exports = {
               "This prompt was blocked due to safety"
             );
           } else {
-            console.error(error);
             await interaction.editReply(
               "An error occurred while executing the command."
             );
