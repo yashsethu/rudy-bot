@@ -110,6 +110,7 @@ module.exports = {
 
             this.votes = {};
           }
+          break;
         }
       case "generate":
       case "ask":
