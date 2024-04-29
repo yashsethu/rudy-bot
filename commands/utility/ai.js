@@ -28,17 +28,19 @@ module.exports = {
         const question = interaction.options.getString("prompt");
         const { totalTokens } = await model.countTokens(question);
         if (totalTokens > 30720) {
-          await interaction.reply("Question is too long!");
+          await interaction.editReply("Question is too long!");
           return;
         }
         const response = await model.generateContent(question);
         const answer = await response.response;
         const string = answer.text();
-        await interaction.reply(string);
+        await interaction.editReply(string);
       }
     } catch (error) {
       console.error(error);
-      await interaction.reply("An error occurred while executing the command.");
+      await interaction.editReply(
+        "An error occurred while executing the command."
+      );
     }
   },
 };
