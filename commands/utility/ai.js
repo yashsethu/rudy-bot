@@ -24,6 +24,7 @@ module.exports = {
     try {
       const subcommand = interaction.options.getSubcommand();
       if (subcommand === "ask") {
+        await interaction.deferReply();
         const question = interaction.options.getString("prompt");
         const { totalTokens } = await model.countTokens(question);
         if (totalTokens > 30720) {

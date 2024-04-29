@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { PermissionsBitField } = require("discord.js");
 
 module.exports = {
   votes: {},
+  lastTimeSet: null,
   data: new SlashCommandBuilder()
     .setName("speech")
     .setDescription("Speech commands!")
@@ -49,6 +49,15 @@ module.exports = {
         if (!interaction.member.permissions.has("ADMINISTRATOR")) {
           await interaction.reply("Only admins can set the time!");
         } else {
+          const now = Date.now();
+          if (
+            this.lastTimeSet &&
+            now - this.lastTimeSet < 24 * 60 * 60 * 1000
+          ) {
+            await interaction.reply("The time can only be set once a day!");
+          } else {
+            this.lastTimeSet = now;
+          }
           if (Object.keys(this.votes).length === 0) {
             await interaction.reply(
               `${user} set the speech time as ${time} minutes, but no votes have been cast yet!`
