@@ -29,6 +29,17 @@ module.exports = {
     )
     .addSubcommand((subcommand) =>
       subcommand
+        .setName("ask")
+        .setDescription("Ask Coach Rudy (Gemini) a question!")
+        .addStringOption((option) =>
+          option
+            .setName("prompt")
+            .setDescription("What do you want?")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
         .setName("generate")
         .setDescription("Ask Google Gemini a question!")
         .addStringOption((option) =>
@@ -98,10 +109,15 @@ module.exports = {
             this.votes = {};
           }
         }
-        break;
       case "generate":
+      case "ask":
         await interaction.deferReply();
         const question = interaction.options.getString("prompt");
+        if (interaction.options.getSubcommand() === "ask") {
+          question =
+            "Answer this question, pretending like I'm a track athlete and you are my old, slightly snarky, track coach that has dedicated his entire life and career to track: " +
+            question;
+        }
         const { totalTokens } = await model.countTokens(question);
         try {
           if (totalTokens > 30720) {
@@ -129,6 +145,7 @@ module.exports = {
             );
           }
         }
+        break;
     }
   },
 };
