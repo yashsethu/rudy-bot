@@ -130,11 +130,16 @@ module.exports = {
           const response = await model.generateContent(question);
           const answer = await response.response;
           const string = answer.text();
-          if (string.length > 2000) {
-            const truncatedString = string.substring(0, 2000 - 3) + "...";
-            await interaction.editReply(truncatedString);
-          } else {
-            await interaction.editReply(string);
+          const chunkSize = 2000;
+          let firstChunk = true;
+          for (let i = 0; i < string.length; i += chunkSize) {
+            const chunk = string.substring(i, i + chunkSize);
+            if (firstChunk) {
+              await interaction.editReply(chunk);
+              firstChunk = false;
+            } else {
+              await interaction.followUp(chunk);
+            }
           }
         } catch (error) {
           if (error.message.includes("SAFETY")) {
