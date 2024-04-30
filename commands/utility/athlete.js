@@ -6,9 +6,9 @@ module.exports = {
     .setDescription("Find information about an athlete!")
     .addSubcommand((subcommand) =>
       subcommand
-        .setName("vote")
-        .setDescription("Vote on speech times!")
-        .addIntegerOption((option) =>
+        .setName("time")
+        .setDescription("Race Times!")
+        .addStringOption((option) =>
           option.setName("time").setDescription("time").setRequired(true)
         )
     ),
