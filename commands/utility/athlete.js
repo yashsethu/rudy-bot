@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { meetNumbers } = require("./meet");
 
 module.exports = {
   data: new SlashCommandBuilder()
