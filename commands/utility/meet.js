@@ -40,7 +40,6 @@ module.exports = {
         meetNumbers[name] = number;
         await interaction.reply({
           content: `Meet number for ${name} set to ${number}!`,
-          ephemeral: true,
         });
         break;
     }
